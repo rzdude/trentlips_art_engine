@@ -1,20 +1,11 @@
-# Welcome to HashLips 👄
+# Welcome to ~~HashLips~~ TRENTLIPS! 😈
 
-![](https://github.com/HashLips/hashlips_art_engine/blob/main/logo.png)
+**IT IS HIGHLY ADVISABLE TO FAMILIARISE YOURSELF WITH THE ORIGINAL SCRIPT BEFORE USING THIS ONE!**
+~~It is also advisable to learn rudimentary Javascript, too. Helps a lot, trust me man!!~~
 
-All the code in these repos was created and explained by HashLips on the main YouTube channel.
+SKIP TO THE NEW STUFF WITH THESE LINKS!
 
-To find out more please visit:
-
-[📺 YouTube](https://www.youtube.com/channel/UC1LV4_VQGBJHTJjEWUmy8nA)
-
-[👄 Discord](https://discord.com/invite/qh6MWhMJDN)
-
-[💬 Telegram](https://t.me/hashlipsnft)
-
-[🐦 Twitter](https://twitter.com/hashlipsnft)
-
-[ℹ️ Website](https://hashlips.online/HashLips)
+- [Single-use trait layers](#Single--use-Traits)
 
 # HashLips Art Engine 🔥
 
@@ -36,7 +27,7 @@ Go to the root of your folder and run this command if you have yarn installed.
 yarn install
 ```
 
-Alternatively you can run this command if you have node installed.
+Alternatively, you can run this command if you have node installed.
 
 ```sh
 npm install
@@ -122,11 +113,7 @@ const layerConfigurations = [
   {
     growEditionSizeTo: 5,
     layersOrder: [
-      { name: "Background" , {
-        options: {
-          bypassDNA: false;
-        }
-      }},
+      { name: "Background" , options: { bypassDNA: false }},
       { name: "Eyeball" },
       {
         name: "Eye color",
@@ -310,4 +297,14 @@ Trait type: Top lid
 }
 ```
 
-Hope you create some awesome artworks with this code 👄
+## Single-use Trait Layers
+
+So, you want traits to only be used once? Worry not!
+
+To mark a layer to have its traits used only once, add the layer option `burn` like so:
+
+```js
+{ name: "Background", options: { burn: true } }
+```
+
+With this, each element will be removed from the layer elements list after use. Once the layer is empty, the layer is removed for the rest of the layer order and generation continues as normal.
