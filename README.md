@@ -4,7 +4,7 @@
 
 ~~It is also advisable to learn rudimentary Javascript, too. Helps a lot, trust me man!!~~
 
-SKIP TO THE NEW STUFF WITH THESE LINKS!
+**SKIP TO THE NEW STUFF WITH THESE LINKS!**
 
 - [Single-use trait layers](#Single-use-Trait-Layers)
 
