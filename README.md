@@ -5,7 +5,7 @@
 
 SKIP TO THE NEW STUFF WITH THESE LINKS!
 
-- [Single-use trait layers](#Single-use-Traits)
+- [Single-use trait layers](#Single-use-Trait-Layers)
 
 # HashLips Art Engine 🔥
 
