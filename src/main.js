@@ -304,7 +304,7 @@ const createDna = (_layers) => {
       // subtract the current weight from the random weight until we reach a sub zero value.
       random -= layer.elements[i].weight;
       if (random < 0) {
-        // if layer burning is on, add the selected element's path to the list to burn and mark it for removal
+        // if layer burning is on, mark element for burning
         if (layer.burn) {
           layer.elements[i].burned = true;
         }
@@ -434,7 +434,7 @@ const startCreating = async () => {
             )}`
           );
         });
-         // burn any burnable elements
+         // remove any burnable elements from their layer
          layers.forEach((layer) => {
           if (layer.burn) {
             for (let i = 0; i < layer.elements.length; i++) {
