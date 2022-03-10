@@ -301,10 +301,12 @@ Trait type: Top lid
 
 So, you want traits to only be used once? Worry not!
 
-To mark a layer to have its traits used only once, add the layer option `burn` like so:
+To mark a layer to have its traits used only once, add the layer option `burn` set to true, like so:
 
 ```js
 { name: "Background", options: { burn: true } }
 ```
 
 With this, each element will be removed from the layer elements list after use. Once the layer is empty, the layer is removed for the rest of the layer order and generation continues as normal.
+
+Layers are set to `false` by default.
