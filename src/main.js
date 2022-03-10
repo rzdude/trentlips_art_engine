@@ -35,7 +35,7 @@ let hashlipsGiffer = null;
 
 const buildSetup = () => {
   if (fs.existsSync(buildDir)) {
-    fs.rmdirSync(buildDir, { recursive: true });
+    fs.rmSync(buildDir, { recursive: true });
   }
   fs.mkdirSync(buildDir);
   fs.mkdirSync(`${buildDir}/json`);
@@ -82,6 +82,7 @@ const getElements = (path) => {
         filename: i,
         path: `${path}${i}`,
         weight: getRarityWeight(i),
+        burned: false,
       };
     });
 };
@@ -106,7 +107,18 @@ const layersSetup = (layersOrder) => {
       layerObj.options?.["bypassDNA"] !== undefined
         ? layerObj.options?.["bypassDNA"]
         : false,
+    burn:
+      layerObj.options?.["burn"] !== undefined
+        ? layerObj.options?.["burn"]
+        : false,
   }));
+  // REMOVE ANY EMPTY FOLDERS
+  for (let i = 0; i < layers.length; i++) {
+    if (layers[i].elements.length == 0) {
+      console.log(`Layer ${layers[i].name} is empty. Removing from layer order.`);
+      layers.splice(i, 1);
+    }
+  }
   return layers;
 };
 
@@ -292,6 +304,10 @@ const createDna = (_layers) => {
       // subtract the current weight from the random weight until we reach a sub zero value.
       random -= layer.elements[i].weight;
       if (random < 0) {
+        // if layer burning is on, add the selected element's path to the list to burn and mark it for removal
+        if (layer.burn) {
+          layer.elements[i].burned = true;
+        }
         return randNum.push(
           `${layer.elements[i].id}:${layer.elements[i].filename}${
             layer.bypassDNA ? "?bypassDNA=true" : ""
@@ -353,14 +369,22 @@ const startCreating = async () => {
     ? console.log("Editions left to create: ", abstractedIndexes)
     : null;
   while (layerConfigIndex < layerConfigurations.length) {
-    const layers = layersSetup(
+    let layers = layersSetup(
       layerConfigurations[layerConfigIndex].layersOrder
     );
     while (
       editionCount <= layerConfigurations[layerConfigIndex].growEditionSizeTo
     ) {
+      // remove empty layer from layer order
+      for (let i = 0; i < layers.length; i++) {
+        if (layers[i].elements.length == 0) {
+          console.log(`All elements in layer ${layers[i].name} have been used. Removing from layer order.`);
+          layers.splice(i, 1);
+        }
+      }
       let newDna = createDna(layers);
       if (isDnaUnique(dnaList, newDna)) {
+        
         let results = constructLayerToDna(newDna, layers);
         let loadedElements = [];
 
@@ -409,6 +433,17 @@ const startCreating = async () => {
               newDna
             )}`
           );
+        });
+         // burn any burnable elements
+         layers.forEach((layer) => {
+          if (layer.burn) {
+            for (let i = 0; i < layer.elements.length; i++) {
+              if (layer.elements[i].burned) {
+                // remove element from elements list of the layer
+                layer.elements.splice(i, 1);
+              }
+            }
+          }
         });
         dnaList.add(filterDNAOptions(newDna));
         editionCount++;
