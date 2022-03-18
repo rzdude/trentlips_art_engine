@@ -313,7 +313,7 @@ const createDna = (_layers) => {
         }
         return randNum.push(
           `${layer.elements[i].id}:${layer.elements[i].filename}${
-            layer.bypassDNA ? "?bypassDNA=true" : ""
+            layer.bypassDNA ? "?bypassDNA=true" || "?noMeta=true" : ""
           }`
         );
       }
