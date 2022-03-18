@@ -312,6 +312,14 @@ To mark a layer to have its traits used only once, add the layer option `burn` s
 
 With this, each element will be removed from the layer elements list after use. Once the layer is empty, the layer is removed for the rest of the layer order and generation continues as normal.
 
+A good use case is if you have a set of 1 of 1s that need to be used only once.
+
+```js
+{ name: "1 of 1s", options: { burn: true } }
+```
+
+Each image in the 1 of 1s folder will only be used once, and its "trait name" will be its file name.
+
 Layers are set to `false` by default.
 
 ## Exclude Layer From Metadata
