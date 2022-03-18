@@ -7,6 +7,8 @@
 **SKIP TO THE NEW STUFF WITH THESE LINKS!**
 
 - [Single-use trait layers](#Single-use-Trait-Layers)
+- [Exclude layer from metadata](#Exclude-Layer-From-Metadata)
+
 
 # HashLips Art Engine 🔥
 
@@ -309,5 +311,19 @@ To mark a layer to have its traits used only once, add the layer option `burn` s
 ```
 
 With this, each element will be removed from the layer elements list after use. Once the layer is empty, the layer is removed for the rest of the layer order and generation continues as normal.
+
+Layers are set to `false` by default.
+
+## Exclude Layer From Metadata
+
+Have a layer you don't want to be in the metadata?
+
+To mark a layer to be excluded from the metadata (that is, it will not show up as a trait in the JSON files), set the `noMeta` option to true on the layer.
+
+```js
+{ name: "Background", options: { noMeta: true } }
+```
+
+This will automatically exclude the layer from the DNA uniqueness check as well (so it's as if bypassDNA is set to true as well).
 
 Layers are set to `false` by default.
