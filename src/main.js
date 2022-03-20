@@ -308,7 +308,7 @@ const createDna = (_layers) => {
       // return the element at the counter's position
       return randNum.push(
         `${layer.elements[layer.counter].id}:${layer.elements[layer.counter].filename}${
-          layer.bypassDNA ? "?bypassDNA=true" || "?noMeta=true" : ""
+          layer.bypassDNA ? "?bypassDNA=true" : ""
         }`
       );
       // if the counter attempts to exceed the number of elements in the layer, stop!!!!
