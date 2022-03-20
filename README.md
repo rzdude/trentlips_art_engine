@@ -8,6 +8,7 @@
 
 - [Single-use trait layers](#Single-use-Trait-Layers)
 - [Exclude layer from metadata](#Exclude-Layer-From-Metadata)
+- [Use a layer's elements in order](#Sequential-Generation)
 
 
 # HashLips Art Engine 🔥
@@ -335,3 +336,16 @@ To mark a layer to be excluded from the metadata (that is, it will not show up a
 This will automatically exclude the layer from the DNA uniqueness check as well (so it's as if bypassDNA is set to true as well).
 
 Layers are set to `false` by default.
+
+## Sequential Generation
+
+Do you have elements you want to be used in order?
+
+You know the drill...
+
+```js
+{ name: "Background", options: { sequential: true } }
+```
+
+Adding the `sequential` option to a layer will cause its elements to be read and used in order.
+The layer is assigned a counter, and until the counter attempts to exceed the number of elements in the layer. elements are used. If your `growEditionSizeTo` exceeds the number of elements in the layer, it will stop generating and throw an error!
