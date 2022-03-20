@@ -333,8 +333,6 @@ To mark a layer to be excluded from the metadata (that is, it will not show up a
 { name: "Background", options: { noMeta: true } }
 ```
 
-This will automatically exclude the layer from the DNA uniqueness check as well (so it's as if bypassDNA is set to true as well).
-
 Layers are set to `false` by default.
 
 ## Sequential Generation
