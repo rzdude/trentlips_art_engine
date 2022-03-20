@@ -111,6 +111,10 @@ const layersSetup = (layersOrder) => {
       layerObj.options?.["burn"] !== undefined
         ? layerObj.options?.["burn"]
         : false,
+    counter:
+      layerObj.options?.["sequential"] !== undefined && layerObj.options?.["sequential"] == true
+        ? -1
+        : false,
   }));
   // REMOVE ANY EMPTY FOLDERS
   for (let i = 0; i < layers.length; i++) {
@@ -297,31 +301,46 @@ const isDnaUnique = (_DnaList = new Set(), _dna = "") => {
 const createDna = (_layers) => {
   let randNum = [];
   _layers.forEach((layer) => {
-    var totalWeight = 0;
-    layer.elements.forEach((element) => {
-      totalWeight += element.weight;
-    });
-    // number between 0 - totalWeight
-    let random = Math.floor(Math.random() * totalWeight);
-    for (var i = 0; i < layer.elements.length; i++) {
-      // subtract the current weight from the random weight until we reach a sub zero value.
-      random -= layer.elements[i].weight;
-      if (random < 0) {
-        // if layer burning is on, mark element for burning
-        if (layer.burn) {
-          layer.elements[i].burned = true;
+    // checks whether the layer has a counter on it, aka the layers need to be used in order
+    if ((layer.counter !== false) && (layer.counter + 1 < layer.elements.length)) {
+      // add to the counter
+      layer.counter++;
+      // return the element at the counter's position
+      return randNum.push(
+        `${layer.elements[layer.counter].id}:${layer.elements[layer.counter].filename}${
+          layer.bypassDNA ? "?bypassDNA=true" || "?noMeta=true" : ""
+        }`
+      );
+      // if the counter attempts to exceed the number of elements in the layer, stop!!!!
+    } else if (layer.counter !== false && layer.counter + 1 == layer.elements.length) {
+      throw new Error(`Not enough elements in layer ${layer.name} to complete sequential generation! Cut your growEditionSizeTo or add more elements. Terminating.`);
+      // if no counter is present, proceed as normal
+    } else {
+      var totalWeight = 0;
+      layer.elements.forEach((element) => {
+        totalWeight += element.weight;
+      });
+      // number between 0 - totalWeight
+      let random = Math.floor(Math.random() * totalWeight);
+      for (var i = 0; i < layer.elements.length; i++) {
+        // subtract the current weight from the random weight until we reach a sub zero value.
+        random -= layer.elements[i].weight;
+        if (random < 0) {
+          // if layer burning is on, mark element for burning
+          if (layer.burn) {
+            layer.elements[i].burned = true;
+          }
+          return randNum.push(
+            `${layer.elements[i].id}:${layer.elements[i].filename}${
+              layer.bypassDNA ? "?bypassDNA=true" || "?noMeta=true" : ""
+            }`
+          );
         }
-        return randNum.push(
-          `${layer.elements[i].id}:${layer.elements[i].filename}${
-            layer.bypassDNA ? "?bypassDNA=true" || "?noMeta=true" : ""
-          }`
-        );
       }
     }
   });
   return randNum.join(DNA_DELIMITER);
 };
-
 const writeMetaData = (_data) => {
   fs.writeFileSync(`${buildDir}/json/_metadata.json`, _data);
 };
