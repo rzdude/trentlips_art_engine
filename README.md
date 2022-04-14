@@ -1,5 +1,7 @@
 # Welcome to ~~HashLips~~ TRENTLIPS! 😈
 
+# PLEASE DON'T USE THE BURN FEATURE RN IT'S BROKEN LOL
+
 **IT IS HIGHLY ADVISABLE TO FAMILIARISE YOURSELF WITH THE ORIGINAL SCRIPT BEFORE USING THIS ONE!**
 
 ~~It is also advisable to learn rudimentary Javascript, too. Helps a lot, trust me man!!~~
